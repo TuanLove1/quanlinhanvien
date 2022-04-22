@@ -4,6 +4,7 @@ function getEle(id) {
     return document.getElementById(id);
 }
 getEle('btnThem').onclick = function () {
+    
     getEle('btnCapNhat').style.display = 'none';
     getEle('tknv').disabled = false;
 }
@@ -18,6 +19,41 @@ getEle('btnThemNV').onclick = function () {
     }
     // console.log(nhanVien);
 }
+
+function layThongTinNhanVienCapNhat() {
+    let _taiKhoan = getEle('tknv').value;
+    let _fullName = getEle('name').value;
+    let _email = getEle('email').value;
+    let _matKhau = getEle('password').value;
+    let _ngayLam = getEle('datepicker').value;
+    let _luongCoBan = getEle('luongCB').value;
+    let _chucVu = getEle('chucvu').value;
+    // console.log(_chucVu);
+    let _gioLam = getEle('gioLam').value;
+
+    //check validation
+    let isValid = true;
+    // if (_taiKhoan == '') {
+    //     getEle('tbTKNV').innerHTML = '(*)Vui lòng nhập tài khoản'
+    //     getEle('tbTKNV').style.display = 'block';
+    //     isValid = false;
+    // }
+    // else {
+    //     getEle('tbTKNV').innerHTML = ''
+    //     getEle('tbTKNV').style.display = 'none';
+    //     isValid = true;
+    // }// 
+    isValid &= validation.kiemTraRong(_taiKhoan,'tbTKNV','(*)Vui lòng nhập tài khoản');
+    
+    if (isValid) {
+        let nhanVien = new NhanVien(_taiKhoan, _fullName, _email, _matKhau, _ngayLam, _luongCoBan, _chucVu, _gioLam);
+        nhanVien.tinhTongLuong(_chucVu);
+        return nhanVien;
+    }
+    return null;
+}
+
+
 function layThongTinNhanVien() {
     let _taiKhoan = getEle('tknv').value;
     let _fullName = getEle('name').value;
@@ -105,7 +141,7 @@ suaNV = (taiKhoan) => {
 }
 
 getEle('btnCapNhat').onclick = function () {
-    let nhanVien = layThongTinNhanVien();
+    let nhanVien = layThongTinNhanVienCapNhat();
     if(nhanVien){
         nhanVien.xepLoai();
 
